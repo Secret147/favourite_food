@@ -3,8 +3,9 @@ import 'package:dishsapp/page/detail/detail_page.dart';
 import 'package:dishsapp/page/dish/dish_page.dart';
 import 'package:dishsapp/page/favourite/widget/favourite_page.dart';
 import 'package:dishsapp/page/home/home_page.dart';
+import 'package:dishsapp/page/login/login.dart';
 import 'package:dishsapp/page/root_page.dart';
-import 'package:dishsapp/page/video/video_page.dart';
+import 'package:dishsapp/page/signup/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -64,6 +65,20 @@ class RouteCustom {
           path: '/dish',
           builder: (BuildContext context, GoRouterState state) {
             return const DishPage();
+          },
+        ),
+        GoRoute(
+          name: "login",
+          path: '/login',
+          builder: (BuildContext context, GoRouterState state) {
+            return const LoginPage();
+          },
+        ),
+        GoRoute(
+          name: "signup",
+          path: '/signup',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SignUpPage();
           },
         ),
       ],

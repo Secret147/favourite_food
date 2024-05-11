@@ -1,6 +1,6 @@
 import 'package:dishsapp/page/detail/detail_page.dart';
 import 'package:dishsapp/page/home/home_page.dart';
-import 'package:dishsapp/providers/dish_provider.dart';
+import 'package:dishsapp/providers/provider.dart';
 import 'package:dishsapp/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

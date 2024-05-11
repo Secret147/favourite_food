@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "58845532827",
+    "project_id": "favouritefood-81205",
+    "storage_bucket": "favouritefood-81205.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58845532827:android:682646746b03e06296ec3e",
+        "android_client_info": {
+          "package_name": "com.example.dishsapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTln5smXlKDhABjKhNxfhkDY1tcsePnhk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

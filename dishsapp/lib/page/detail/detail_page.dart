@@ -1,5 +1,5 @@
 import 'package:dishsapp/model/dish.dart';
-import 'package:dishsapp/providers/dish_provider.dart';
+import 'package:dishsapp/providers/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:like_button/like_button.dart';
@@ -18,19 +18,27 @@ class DetailPage extends StatelessWidget {
               flex: 1,
               child: SizedBox(
                 width: double.infinity,
+                height: 320,
                 child: Image.network(item.image, fit: BoxFit.cover),
               ),
             ),
             Positioned(
               right: 8,
               bottom: 8,
-              child: LikeButton(
-                isLiked: item.liked == 1 ? true : false,
-                onTap: (isLiked) {
-                  context.read<DishProvider>().putLiked(item.id);
-                  return Future(() => !isLiked);
-                },
-              ),
+              child: FutureBuilder(
+                  future: context.read<DishProvider>().checkedProvider(item.id),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    int checked = snapshot.data as int;
+                    return LikeButton(
+                      isLiked: checked == 1 ? true : false,
+                      onTap: (isLiked) {
+                        context.read<DishProvider>().likedProvider(item.id);
+
+                        return Future(() => (!isLiked));
+                      },
+                    );
+                  }),
             )
           ],
         ),

@@ -1,10 +1,17 @@
+import 'package:dishsapp/utils/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class MenuPage extends StatelessWidget {
+class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
 
+  @override
+  State<MenuPage> createState() => _MenuPageState();
+}
+
+class _MenuPageState extends State<MenuPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,17 +57,23 @@ class MenuPage extends StatelessWidget {
               },
               leading: const Icon(CupertinoIcons.table, color: Colors.white),
               title: const Text(
-                "Category Screen",
+                "Add Dish",
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                     color: Colors.white),
               ),
             ),
-            const ListTile(
-              leading: Icon(CupertinoIcons.settings, color: Colors.white),
-              title: Text(
-                "Setting Sreen",
+            ListTile(
+              onTap: () async {
+                final SharedPreferences prefs = await Utils.prefs;
+                await prefs.remove("email");
+                await prefs.remove("username");
+                context.goNamed("login");
+              },
+              leading: const Icon(Icons.exit_to_app, color: Colors.white),
+              title: const Text(
+                "Logout",
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,

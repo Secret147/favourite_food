@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 
 import 'package:dishsapp/model/dish.dart';
-import 'package:dishsapp/providers/dish_provider.dart';
+import 'package:dishsapp/providers/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:like_button/like_button.dart';
 import 'package:provider/provider.dart';
 
-class HomeListitem extends StatelessWidget {
+class HomeListitem extends StatefulWidget {
   const HomeListitem({super.key});
+
+  @override
+  State<HomeListitem> createState() => _HomeListitemState();
+}
+
+class _HomeListitemState extends State<HomeListitem> {
+  dynamic checkIsLiked;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +33,7 @@ class HomeListitem extends StatelessWidget {
             );
           }
           List<Dish> listItem = snapshot.data as List<Dish>;
+
           return Container(
             child: GridView.builder(
               itemCount: listItem.length,
@@ -57,18 +65,36 @@ class HomeListitem extends StatelessWidget {
                           Positioned(
                             bottom: 4,
                             right: 4,
-                            child: LikeButton(
-                              isLiked:
-                                  listItem[index].liked == 1 ? true : false,
-                              onTap: (isLiked) {
-                                context
+                            child: FutureBuilder(
+                                future: context
                                     .read<DishProvider>()
-                                    .putLiked(listItem[index].id);
-                                listItem[index].liked =
-                                    listItem[index].liked == 1 ? 0 : 1;
-                                return Future(() => (!isLiked));
-                              },
-                            ),
+                                    .checkedProvider(listItem[index].id),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<dynamic> snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  }
+                                  if (!snapshot.hasData) {
+                                    return Container(
+                                      child: const Text("no data"),
+                                    );
+                                  }
+
+                                  int checked = snapshot.data as int;
+                                  return LikeButton(
+                                    isLiked: checked == 1 ? true : false,
+                                    onTap: (isLiked) {
+                                      context
+                                          .read<DishProvider>()
+                                          .likedProvider(listItem[index].id);
+
+                                      return Future(() => (!isLiked));
+                                    },
+                                  );
+                                }),
                           ),
                         ]),
                       ),
