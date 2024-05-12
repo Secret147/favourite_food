@@ -14,39 +14,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import test3.entity.testEntity;
-import test3.repository.testRepository;
+import test3.entity.Product;
+import test3.repository.ProductRepository;
 
 @RestController
 @CrossOrigin
 @RequestMapping("/dish")
-public class testAPI {
+public class ProductAPI {
 	@Autowired
-	private testRepository testRe;
+	private ProductRepository testRe;
 	
 	@GetMapping("/all")
 	public ResponseEntity<?> getDish(){
-		List<testEntity> dishs = testRe.findAll();
+		List<Product> dishs = testRe.findAll();
 		return ResponseEntity.ok(dishs);
 	}
 	@GetMapping("/listlike")
 	public ResponseEntity<?> listLike(){
-		List<testEntity> dishs = testRe.findAllByLiked(1);
+		List<Product> dishs = testRe.findAllByLiked(1);
 		return ResponseEntity.ok(dishs);
 	}
 	@GetMapping("/checkliked/{id}")
 	public ResponseEntity<?> checkLike(@PathVariable Long id){
-		testEntity dish = testRe.findById(id);
+		Product dish = testRe.findById(id);
 		return dish.getLiked() == 1 ? ResponseEntity.ok(true) :  ResponseEntity.ok(false) ;
 	}
 	@PostMapping("/newdish")
-	public ResponseEntity<?> newDish(@RequestBody testEntity dish){
+	public ResponseEntity<?> newDish(@RequestBody Product dish){
 		testRe.save(dish);
 		return ResponseEntity.ok("Save success");
 	}
 	@PutMapping("/liked/{id}")
 	public ResponseEntity<?> liked(@PathVariable Long id){
-		testEntity dish = testRe.findById(id);
+		Product dish = testRe.findById(id);
 		dish.setLiked(dish.getLiked()==1 ? 0 : 1);
 		testRe.save(dish);
 		return ResponseEntity.ok("Success");
